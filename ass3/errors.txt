@@ -1,0 +1,74 @@
+Polynomials/Sequences Polyops Checker Version 2.0
+whitespace 32
+Checking polyops.cpp for EC602 submission.
+
+---- analysis of your code structure ----
+
+authors       : vbansal@bu.edu ayush34@bu.edu ysp599@bu.edu
+included libs : 
+
+cpplint       : 1 problems
+  [using cpplint --filter=-readability/alt_tokens,+build/include_alpha polyops.cpp]
+
+  line 18 (whitespace/braces): { should almost always be at the end of the previous line
+  line 26 (whitespace/end_of_line): Line ends in whitespace.  Consider deleting these extra spaces.
+  line 27 (whitespace/braces): { should almost always be at the end of the previous line
+
+astyle        : 32.6% code unchanged.
+lines of code    : 46, 159% of reference
+tokens in code   : 100,  77% of reference
+comments      : 10
+
+---- check of requirements ----
+Passed: a. check the included libraries are allowed
+Passed: b. add same size vectors
+Passed: c. add different size vectors
+Passed: g. multiply vectors with result smaller
+Passed: h. vector double
+-----------------errors found--------------
+Failed: d. multiply same size vectors
+CASE:  (1.2, 0, 5) * (3, 2, 1) = (3.6, 2.4, 16.2, 10, 5)
+your multiply: (3.6, 2.4, 1.2)
+correct answer: (3.6, 2.4, 16.2, 10, 5)
+
+CASE:  (1, 2, 3) * (4, 5, 6) = (4, 13, 28, 27, 18)
+your multiply: (4.0, 5.0, 6.0)
+correct answer: (4, 13, 28, 27, 18)
+
+CASE:  (0, 0, 4) * (0, 0, 0.1) = (0, 0, 0, 0, 0.4)
+your multiply: (0.0, 0.0, 0.0)
+correct answer: (0, 0, 0, 0, 0.4)
+
+
+-------
+Failed: e. multiply different size vectors
+CASE:  (1.2, 0, 0, 5) * (3, 2, 1) = (3.6, 2.4, 1.2, 15, 10, 5)
+your multiply: (3.6, 2.4, 1.2)
+correct answer: (3.6, 2.4, 1.2, 15, 10, 5)
+
+CASE:  (1, 6, 3) * (4,) = (4, 24, 12)
+your multiply: (4.0,)
+correct answer: (4, 24, 12)
+
+CASE:  (1, 1, -1) * (1, 1, 1) = (1, 2, 1, 0.0, -1)
+your multiply: (1.0, 1.0, 1.0)
+correct answer: (1, 2, 1, 0.0, -1)
+
+CASE:  (0, 0, 0, 0, 5) * (0, 0, 1, 4) = (0, 0, 0, 0, 0, 0, 5, 20)
+your multiply: (0.0, 0.0, 0.0, 0.0)
+correct answer: (0, 0, 0, 0, 0, 0, 5, 20)
+
+
+-------
+Failed: f. add vectors with result smaller
+CASE:  (1, 3, 2) + (1, 6, -2) = (2, 9)
+your addition: (2.0, 9.0, 0.0)
+correct answer: (2, 9)
+
+CASE:  (1, 1, 1) + (-1, -1, -1) = (0,)
+your addition: (0.0, 0.0, 0.0)
+correct answer: (0,)
+
+
+-------
+

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#Copyright 2018 Vaibhav Bansal vbansal@bu.edu
+ls -t | head "-$1"
