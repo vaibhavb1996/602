@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+"""
+visualize_motion:
+
+Run like this:
+
+visualize_motion results_file llx lly urx ury
+
+or 
+
+visualize_motion results_file
+
+where results_file is the output of collision program
+
+"""
+import pylab
+import sys
+import matplotlib.patches as mpatches
+import time
+import random
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+import matplotlib.animation as animation
+
+fname = sys.argv[1]
+fnamebase,_ = fname.split('.')
+moviefile = open(fname)
+
+try:
+    llx = float(sys.argv[2])
+    lly = float(sys.argv[3])
+    urx = float(sys.argv[4])
+    ury = float(sys.argv[5])
+except:
+   llx = lly = -100
+   urx = ury = 100
+
+fig,ax = pylab.subplots(figsize=(5,5*ury/urx))
+
+ax.set_xlim(llx,urx)
+ax.set_ylim(lly,ury)
+
+Colors=['green','blue','yellow','black','cyan','violet','lightgreen','red']
+t= 0
+Movie=[]
+C=[]
+Times = []
+for line in  moviefile:
+    if len(line.split())==1:
+        Times.append(float(line.strip()))
+        if C:
+            Movie.append(C)
+        C=[]
+    else:
+        try:
+            name,x,y,vx,vy = line.split()
+            C.append( (name,float(x),float(y)) )
+        except:
+            pass
+Movie.append(C)
+
+Patches=[]
+for (name,x,y) in Movie[0]:
+        Patches.append(ax.add_artist(mpatches.Circle((x,y),5,color=random.choice(Colors),alpha=0.5)))
+ax.set_title('t=0')
+
+N=len(Patches)
+M= len(Movie)
+def update(frame):
+    m = frame % M
+    now = Movie[m]
+    for x in range(N):
+        circ = Patches[x]
+        circ.center= (now[x][1],now[x][2])
+    ax.set_title('t={:4.2f} s'.format(Times[m]))
+
+bounce_ani = FuncAnimation(fig, update,repeat=True )
+
+pylab.show()
+#if you have ffmpeg or mencoder
+
+#Writer = animation.writers['ffmpeg']
+
+#EE=['-profile:v baseline','-pix_fmt yuv420p','-vcodec libx264']
+#mywriter=Writer(fps=3,metadata=dict(artist="Jeff Carruthers"),bitrate=20000)
+
+#bounce_ani.save(fnamebase+'.mp4',writer=mywriter)
